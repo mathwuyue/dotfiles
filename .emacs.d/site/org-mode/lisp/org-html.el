@@ -435,7 +435,7 @@ like that: \"%%\"."
   :type 'string)
 
 (defcustom org-export-html-home/up-format
-  "<div id=\"org-div-home-and-up\" style=\"text-align:right;font-size:70%%;white-space:nowrap;\">
+  "<div id=\"org-div-home-and-up\" style=\"text-align:left;font-size:70%%;white-space:nowrap;\">
  <a accesskey=\"h\" href=\"%s\"> UP </a>
  |
  <a accesskey=\"H\" href=\"%s\"> HOME </a>

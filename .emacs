@@ -1,4 +1,3 @@
-
 ;;-*- Emacs-Lisp -*-
 ;; Time-stamp:<2011-06-18 2:10 by Zhanpeng Chen
 ;;=============load-path==================
@@ -51,31 +50,54 @@
 ;;关闭工具栏,菜单栏,滚动条
 (tool-bar-mode nil)
 ;;(menu-bar-mode nil)
-(scroll-bar-mode nil)
+ (scroll-bar-mode -1)
 ;;把这些缺省禁用的功能打开
 (setq version-control t)
 (setq kept-new-versions 3)
 (setq delete-old-versions t)
 (setq kept-old-versions 2)
 (setq dired-kept-versions 1)
+(setq show-paren-mode t)
+
+;; autopair
+(require 'autopair)
+(autopair-global-mode)
+
 ;;multi-term-mode
 (require 'multi-term)
+
+(autoload 'multi-term "multi-term" nil t)
+(autoload 'multi-term-next "multi-term" nil t)
+
 (setq multi-term-program "/bin/bash")
+(set-default 'autopair-dont-activate #'(lambda ()
+					 (eq major-mode 'term-mode)))
+;; handy keybindings:
+(global-set-key (kbd "C-c t") 'multi-term-next)
+(global-set-key (kbd "C-c T") 'multi-term)
 (add-hook 'term-mode-hook (lambda ()
                             (define-key term-raw-map (kbd "C-y") 'term-paste)))
-(add-hook 'term-mode-hook
-  #'(lambda () (setq autopair-dont-activate t)))
+(defun term-mode-settings ()
+  "Settings for `term-mode'"
+  ;; emacs gui版本如果不把scroll-margin设为0
+  ;; 当光标最屏幕底部时，有可能使得屏幕发生抖动
+  (make-local-variable 'scroll-margin)
+  (setq-default scroll-margin 0))
 
-(global-set-key (kbd "C-c t") 'multi-term-next)
-(global-set-key (kbd "C-c T") 'multi-term) ;; create a new one
+(add-hook 'term-mode-hook 'term-mode-settings)
+;;;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-insert-directory "~/.emacs.d/insert/")
  '(column-number-mode t)
+ '(ecb-options-version "2.40")
+ '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
  '(mumamo-chunk-coloring 1)
  '(nxhtml-default-encoding (quote utf-8))
+ '(org-agenda-export-html-style "<link rel=\"stylesheet\" href=\"wiki/org.css\" type=\"text/css\" />")
  '(org-export-html-coding-system nil)
  '(org-export-html-mathjax-template "")
  '(org-export-html-style-include-default nil)
@@ -86,6 +108,7 @@
  '(py-start-run-py-shell t)
  '(show-paren-mode t)
  '(speedbar-show-unknown-files t)
+ '(tabbar-background-color "light gray")
  '(term-default-bg-color "#042028")
  '(term-default-fg-color "#eeeeee")
  '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
@@ -100,37 +123,19 @@
 ;;speedbar-setting
 
 ;;Emacs主题高亮
-(require 'color-theme)
+;; (require 'color-theme)
+;; (require 'color-theme-solarized)
+;; (color-theme-initialize)
+;; (color-theme-solarized-dark)
+;; (load "color-theme")
+(add-to-list 'load-path "~/.emacs.d/site/emacs-color-theme-solarized/")
 (require 'color-theme-solarized)
-(color-theme-initialize)
 ;;(color-theme-solarized-dark)
-;;(load "color-theme")
 (if window-system 
-	(color-theme-solarized-dark)
+  	(color-theme-solarized-dark)
   ())
 
-;; ;;nxhtml-mode
-;; (load "~/.emacs.d/site/nxhtml/autostart.el")
-;; ;;Mumamo is making emacs 23.3 freak out:
-;; (when (and (equal emacs-major-version 23)
-;;              (equal emacs-minor-version 3))
-;;     (eval-after-load "bytecomp"
-;;       '(add-to-list 'byte-compile-not-obsolete-vars
-;;                     'font-lock-beginning-of-syntax-function))
-;; ;; ;;   tramp-compat.el clobbers this variable!
-;;     (eval-after-load "tramp-compat"
-;;     '(add-to-list 'byte-compile-not-obsolete-vars
-;;                  'font-lock-beginning-of-syntax-function)))
-;;   (setq auto-mode-alist (cons '("\\.html$" . nxhtml-mode) auto-mode-alist))
- (add-hook 'html-mode-hook
-           (lambda()
-             (setq sgml-basic-offset 4)
-             (setq indent-tabs-mode t)))
-;;====autopair=====
-(require 'autopair)
-(autopair-global-mode)
-(add-hook 'term-mode-hook
-  #'(lambda () (setq autopair-dont-activate t)))
+
 ;;===代码折叠=======
 (add-hook 'c-mode-hook 'hs-minor-mode)
 ;;===backup-setting===
@@ -138,12 +143,13 @@
 (setq backup-directory-alist(quote(("." . "~/.backup"))))
 ;;===cc-mode=========
 (require 'cc-mode)
-(c-set-offset 'inline-open 0)
-(c-set-offset 'friend '-)
-(c-set-offset 'substatement-open 0)
+(defun set-newline-and-indent ()
+  (local-set-key (kbd "RET") 'newline-and-indent))
+(add-hook 'c-mode 'set-newline-and-indent)
 ;;====compile=======
-(setq compile-command "make")
-(define-key c-mode-base-map [(f7)] 'compile)
+(require 'smart-compile)
+;;(define-key c-mode-base-map [(f7)] 'compile)
+(global-set-key [f7] 'smart-compile)
 ;;====org-mode======
 (add-to-list 'load-path "~/.emacs.d/site/org-mode/lisp")
 (add-to-list 'load-path "/home/lowstz/.emacs.d/site/org-mode/contrib/lisp")
@@ -157,20 +163,20 @@
 (setq org-publish-project-alist
       '(("note-org"
          :base-directory "~/Dropbox/org/wiki"
-         :publishing-directory "~/wwwroot/wiki"
+         :publishing-directory "/ssh:lowstz@lowstz.org#2222:~/wwwroot/wiki"
 	 :htmlized-source t
          :base-extension "org"
          :recursive t
          :publishing-function org-publish-org-to-html
-         :auto-index t
-         :index-filename "index.org"
-         :index-title "index"
+         :auto-sitemap t
+		 :sitemap-filename "index.org"
+		 :sitemap-title "Lowstz's Wiki"
          :link-home "index.html"
          :section-numbers nil
          :style "<link rel=\"stylesheet\"   href=\"/wiki/org.css\" type=\"text/css\"/>")
         ("note-static"
          :base-directory "~/Dropbox/org/wiki"
-         :publishing-directory "~/wwwroot/wiki"
+         :publishing-directory "/ssh:lowstz@lowstz.org#2222:~/wwwroot/wiki"
          :recursive t
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|swf\\|zip\\|gz\\|txt\\|el"
          :publishing-function org-publish-attachment)
@@ -178,23 +184,8 @@
          :components ("note-org" "note-static")
          :author "lowstz@gmail.com"
          )))
-
-(require 'tramp)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-export-html-style "<link rel=\"stylesheet\" href=\"wiki/org.css\" type=\"text/css\" />")
- '(org-export-html-mathjax-template "")
- '(org-export-html-style-include-default nil)
- '(org-export-html-style-include-scripts nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;;;;;;Org-mode function
+;;
 ;;=====org-mode-end======================
 
 ;;ruby-mode-setting
@@ -216,12 +207,7 @@
 (add-hook 'ruby-mode-hook 'turn-on-font-lock)
 
 ;;font-setting
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#042028" :foreground "#708183" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "Monaco")))))
+
 
 
 ;;python-mode-setting
@@ -252,6 +238,7 @@
 (tabbar-mode t)
 (global-set-key [(meta j)] 'tabbar-backward)  
 (global-set-key [(meta k)] 'tabbar-forward)
+
 ;; change faces for better-looking tabs (and more obvious selected tab!)
 ;; full face specification to avoid inheriting from the frame font
 ;; or from mode-line
@@ -265,8 +252,8 @@
 		    :strike-through nil
 ;; inherit from frame		    :inverse-video
 		    :stipple nil
-		    :background "gray80"
-		    :foreground "black"
+		    :background "gray55"
+		    :foreground "gray55"
 ;;		    :box '(:line-width 2 :color "white" :style nil)
 		    :box nil
 		    :family "Lucida Grande")
@@ -311,7 +298,7 @@
   '((t
      :inherit tabbar-selected
      :weight bold
-     :height 110
+     :height 100
      ))
   "Face used for unselected tabs."
   :group 'tabbar)
@@ -320,7 +307,7 @@
   '((t
      :inherit tabbar-unselected
      :weight bold
-     :height 110
+     :height 100
      ))
   "Face used for unselected tabs."
   :group 'tabbar)
@@ -329,3 +316,54 @@
 				 :foreground "white"))
     "Face for unselected, highlighted tabs."
     :group 'tabbar)
+
+;; ibus-mode
+(require 'ibus)
+(add-hook 'after-init-hook 'ibus-mode-off)
+;;;; tramp-setting
+(require 'tramp)
+;;
+
+;;;; ECB-mode
+(setq stack-trace-on-error t)
+(add-to-list 'load-path "~/.emacs.d/site/ecb-snap")
+(require 'ecb)
+(ecb-byte-compile)
+(global-set-key [f9] 'ecb-activate)
+(global-set-key [f10] 'ecb-deactivate)
+(setq ecb-tip-of-the-day nil 
+	  ecb-tree-indent 4 
+	  ecb-windows-height 0.5 
+	  ecb-windows-width 0.17 
+	  ecb-auto-compatibility-check nil 
+	  ecb-version-check nil)
+
+;;;; auto-insert
+(add-hook 'find-file-hooks 'auto-insert)
+(auto-insert-mode 1)
+(define-auto-insert 'sh-mode '(nil "#!/bin/bash\n\n"))
+(define-auto-insert 'python-mode '(nil "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\n"))
+
+;;;; cscope
+(add-hook 'c-mode-common-hook '(lambda() (require 'xcscope)))
+          
+
+;;;; yasnippet
+ (add-to-list 'load-path
+               "~/.emacs.d/site/yasnippet")
+ (require 'yasnippet) ;; not yasnippet-bundle
+ (yas/initialize)
+ (yas/load-directory "~/.emacs.d/site/yasnippet/snippets")
+
+;;;; auto-complete
+(add-to-list 'load-path "/home/lowstz/.emacs.d/site/")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "/home/lowstz/.emacs.d/site/ac-dict")
+(ac-config-default)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
