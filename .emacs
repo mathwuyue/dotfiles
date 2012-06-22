@@ -1,3 +1,6 @@
+;;;;cedet
+(load-file "~/.emacs.d/site/cedet-1.1/common/cedet.el")
+
 ;;-*- Emacs-Lisp -*-
 ;; Time-stamp:<2011-06-18 2:10 by Zhanpeng Chen
 ;;=============load-path==================
@@ -17,7 +20,7 @@
 (global-linum-mode t)
 ;;Tab-setting
 (setq-default tab-width 4)
-(setq-default c-basic-offset 4)
+(setq-default c-basic-offset 8)
 ;;不要在鼠标点击的那个地方插入剪贴板内容
 ;;(setq mouse-yank-at-point t)
 ;;显示80列就换行
@@ -50,7 +53,8 @@
 ;;关闭工具栏,菜单栏,滚动条
 (tool-bar-mode nil)
 ;;(menu-bar-mode nil)
- (scroll-bar-mode -1)
+;;(scroll-bar-mode -1)
+(scroll-bar-mode t)
 ;;把这些缺省禁用的功能打开
 (setq version-control t)
 (setq kept-new-versions 3)
@@ -86,34 +90,7 @@
 
 (add-hook 'term-mode-hook 'term-mode-settings)
 ;;;;
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auto-insert-directory "~/.emacs.d/insert/")
- '(column-number-mode t)
- '(ecb-options-version "2.40")
- '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
- '(mumamo-chunk-coloring 1)
- '(nxhtml-default-encoding (quote utf-8))
- '(org-agenda-export-html-style "<link rel=\"stylesheet\" href=\"wiki/org.css\" type=\"text/css\" />")
- '(org-export-html-coding-system nil)
- '(org-export-html-mathjax-template "")
- '(org-export-html-style-include-default nil)
- '(org-export-html-style-include-scripts nil)
- '(py-shebang-startstring "#!/usr/bin/env")
- '(py-shell-name "ipython")
- '(py-shell-toggle-1 "ipython")
- '(py-start-run-py-shell t)
- '(show-paren-mode t)
- '(speedbar-show-unknown-files t)
- '(tabbar-background-color "light gray")
- '(term-default-bg-color "#042028")
- '(term-default-fg-color "#eeeeee")
- '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
- '(tool-bar-mode nil)
- '(truncate-partial-width-windows nil))
+
 
        ;; foreground color (yellow)
 ;;emacs-tramp
@@ -128,11 +105,11 @@
 ;; (color-theme-initialize)
 ;; (color-theme-solarized-dark)
 ;; (load "color-theme")
-(add-to-list 'load-path "~/.emacs.d/site/emacs-color-theme-solarized/")
+( add-to-list 'load-path "~/.emacs.d/site/emacs-color-theme-solarized/")
 (require 'color-theme-solarized)
 ;;(color-theme-solarized-dark)
 (if window-system 
-  	(color-theme-solarized-dark)
+   	(color-theme-solarized-dark)
   ())
 
 
@@ -324,7 +301,9 @@
 (require 'tramp)
 ;;
 
-;;;; ECB-mode
+
+
+ ;;;; ECB-mode
 (setq stack-trace-on-error t)
 (add-to-list 'load-path "~/.emacs.d/site/ecb-snap")
 (require 'ecb)
@@ -332,10 +311,10 @@
 (global-set-key [f9] 'ecb-activate)
 (global-set-key [f10] 'ecb-deactivate)
 (setq ecb-tip-of-the-day nil 
-	  ecb-tree-indent 4 
-	  ecb-windows-height 0.5 
-	  ecb-windows-width 0.17 
-	  ecb-auto-compatibility-check nil 
+ 	  ecb-tree-indent 4 
+ 	  ecb-windows-height 0.5 
+	  ecb-windows-width 0.20
+ 	  ecb-auto-compatibility-check nil 
 	  ecb-version-check nil)
 
 ;;;; auto-insert
@@ -366,4 +345,52 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 98 :width normal)))))
+ '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
+
+;;; Always do syntax highlighting
+(global-font-lock-mode 1)
+
+;;; Also highlight parens
+(setq show-paren-delay 0
+      show-paren-style 'parenthesis)
+(show-paren-mode 1)
+
+;;; This is the binary name of my scheme implementation
+(setq scheme-program-name "scm")
+
+;;;; buffer size global-key
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(after-save-hook (quote (executable-make-buffer-file-executable-if-script-p)))
+ '(auto-insert-directory "~/.emacs.d/insert/")
+ '(column-number-mode t)
+ '(ecb-auto-expand-tag-tree (quote all))
+ '(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
+ '(mumamo-chunk-coloring 1)
+ '(nxhtml-default-encoding (quote utf-8))
+ '(org-agenda-export-html-style "<link rel=\"stylesheet\" href=\"wiki/org.css\" type=\"text/css\" />")
+ '(org-export-html-coding-system nil)
+ '(org-export-html-mathjax-template "")
+ '(org-export-html-style-include-default nil)
+ '(org-export-html-style-include-scripts nil)
+ '(py-shebang-startstring "#!/usr/bin/env")
+ '(py-shell-name "ipython")
+ '(py-shell-toggle-1 "ipython")
+ '(py-start-run-py-shell t)
+ '(show-paren-mode t)
+ '(smart-compile-alist (quote ((emacs-lisp-mode emacs-lisp-byte-compile) (html-mode browse-url-of-buffer) (nxhtml-mode browse-url-of-buffer) (html-helper-mode browse-url-of-buffer) (octave-mode run-octave) ("\\.c\\'" . "gcc -Wall -O2 %f -lm -o %n") ("\\.[Cc]+[Pp]*\\'" . "g++ -O2 %f -lm -o %n") ("\\.m\\'" . "gcc -O2 %f -lobjc -lpthread -o %n -std=c99") ("\\.java\\'" . "javac %f") ("\\.php\\'" . "php -l %f") ("\\.f90\\'" . "gfortran %f -o %n") ("\\.[Ff]\\'" . "gfortran %f -o %n") ("\\.cron\\(tab\\)?\\'" . "crontab %f") ("\\.tex\\'" tex-file) ("\\.texi\\'" . "makeinfo %f") ("\\.mp\\'" . "mptopdf %f") ("\\.pl\\'" . "perl -cw %f") ("\\.rb\\'" . "ruby -cw %f"))))
+ '(speedbar-show-unknown-files t)
+ '(tabbar-background-color "light gray")
+ '(term-default-bg-color "#042028")
+ '(term-default-fg-color "#eeeeee")
+ '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
+ '(tool-bar-mode nil)
+ '(truncate-partial-width-windows nil))

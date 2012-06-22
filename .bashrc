@@ -3,6 +3,10 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# Custom PS1
+
+PS1='`a=$?;if [ $a -ne 0 ]; then a=""$a; echo -ne "\[\e[s\e[1A\e[$((COLUMNS-2))G\e[31m\e[1;41m${a:(-3)}\e[u\]\[\e[0m\e[7m\e[2m\e"; fi`\[\e[0;32m\]\u@\h:\[\e[0m\e[1;34m\]\W\[\e[1;32m\]\$ \[\e[0m\]'
+
 # User specific aliases and functions
 alias cp='cp -i'
 alias df='df -h'
@@ -17,11 +21,16 @@ alias cddoc='cd /home/lowstz/Documents'
 alias cddp='cd /home/lowstz/Dropbox'
 alias sshvps='ssh -p 2222 lowstz@lowstz.org'
 alias gowiki='cd ~/Dropbox/org/wiki'
+alias todo="ec ~/Dropbox/org/plan/todo.org"
+alias ec='emacsclient -c'
+alias open="xdg-open"
 
-#alias jt='xfce4-srceenshooter'
+alias jt='xfce4-screenshooter'
 #editor
 export TERM=xterm-256color
-export EDITOR="/usr/bin/emacsclient -c"
+export UAEDITOR=emacs
+export EDITOR=emacs
+export VISUAL=emacs
 
 # locale setting
 export LC_MESSAGES=en_US.UTF-8
@@ -69,3 +78,4 @@ return 0;
 }
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+

@@ -1,5 +1,6 @@
 run_once("emacs", "--daemon")
-run_once("ibus-daemon")
+run_once("fcitx -d -r")
+--run_once("fcitx -d")
 run_once("dropbox", "start")
 run_once("nm-applet")
 run_once("xset dpms 1800 1800 1800")

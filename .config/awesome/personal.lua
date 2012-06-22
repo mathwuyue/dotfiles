@@ -1,7 +1,7 @@
-terminal = 'lxterminal' -- can be app in path, or full path e.g. /usr/bin/xterm
+terminal = 'urxvt' -- can be app in path, or full path e.g. /usr/bin/xterm
 editor = "emacsclient -c"
 
-wallpaper_dir = os.getenv("HOME") .. "/Dropbox/Photos/wallpaper/awesome.jpg" -- grabs a random bg
+wallpaper_dir = os.getenv("HOME") .. "/Dropbox/Photos/wallpaper/awesome.png" -- grabs a random bg
 
 taglist_numbers = "arabic" -- we support arabic (1,2,3...),
 -- arabic, chinese, {east|persian}_arabic, roman, thai, random

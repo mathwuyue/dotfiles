@@ -17,7 +17,7 @@
 ;; This program is distributed in the hope that it will be useful, but WITHOUT
 ;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 ;; FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-;; details.
+; details.
 
 ;; You should have received a copy of the GNU General Public License along with
 ;; GNU Emacs; see the file COPYING.  If not, write to the Free Software
@@ -1173,19 +1173,19 @@ Currently this is a check if the right `cedet-version is loaded."
           (cedet-required-version-str-max (ecb-package-version-list2str
                                            ecb-cedet-required-version-max))
           (version-error nil))
-      ;; check if cedet-version is correct
-      (when (or (not (boundp 'cedet-version))
-                (ecb-package-version-list<
-                 (ecb-package-version-str2list cedet-version)
-                 ecb-cedet-required-version-min)
-                (ecb-package-version-list<
-                 ecb-cedet-required-version-max
-                 (ecb-package-version-str2list cedet-version)))
-        (setq version-error (concat "cedet ["
-                                    cedet-required-version-str-min
-                                    ", "
-                                    cedet-required-version-str-max
-                                    "]")))
+      ;; ;; check if cedet-version is correct
+      ;; (when (or (not (boundp 'cedet-version))
+      ;;           (ecb-package-version-list<
+      ;;            (ecb-package-version-str2list cedet-version)
+      ;;            ecb-cedet-required-version-min)
+      ;;           (ecb-package-version-list<
+      ;;            ecb-cedet-required-version-max
+      ;;            (ecb-package-version-str2list cedet-version)))
+      ;;   (setq version-error (concat "cedet ["
+      ;;                               cedet-required-version-str-min
+      ;;                               ", "
+      ;;                               cedet-required-version-str-max
+      ;;                               "]")))
       (if (null version-error)
           ;; this is the only place where this variable is set
           (setq ecb-all-requirements-available t)
