@@ -1,0 +1,9 @@
+[user]
+		name  = Lowstz Chen
+		email = lowstz@gmail.com
+[color]
+		branch	    = auto
+		diff        = auto
+		grep        = auto
+		interactive = auto
+		status      = auto
