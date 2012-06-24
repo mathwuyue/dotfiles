@@ -394,3 +394,16 @@
  '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
  '(tool-bar-mode nil)
  '(truncate-partial-width-windows nil))
+
+(add-to-list 'load-path "~/.emacs.d/site/emacs-powerline")
+(require 'powerline)
+(setq powerline-arrow-shape 'arrow14)
+
+(custom-set-faces
+ '(mode-line ((t (:foreground "#030303" :background "#bdbdbd" :box nil))))
+ '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
+
+
+
+
+
