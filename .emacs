@@ -17,9 +17,11 @@
 ;;显示列号
 (setq column-number-mode t)
 ;;显示行数
-(global-linum-mode t)
+(global-linum-mode 1)
 ;;Tab-setting
+(setq indent-tabs-mode nil)
 (setq-default tab-width 4)
+(setq-default py-indent-offset 4)
 (setq-default c-basic-offset 8)
 ;;不要在鼠标点击的那个地方插入剪贴板内容
 ;;(setq mouse-yank-at-point t)
@@ -104,7 +106,6 @@
 ;; (require 'color-theme-solarized)
 ;; (color-theme-initialize)
 ;; (color-theme-solarized-dark)
-;; (load "color-theme")
 ( add-to-list 'load-path "~/.emacs.d/site/emacs-color-theme-solarized/")
 (require 'color-theme-solarized)
 ;;(color-theme-solarized-dark)
@@ -345,7 +346,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 113 :width normal)))))
+ '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(mode-line ((t (:foreground "#030303" :background "#bdbdbd" :box nil))))
+ '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
 
 ;;; Always do syntax highlighting
 (global-font-lock-mode 1)
@@ -385,7 +388,6 @@
  '(py-shell-name "ipython")
  '(py-shell-toggle-1 "ipython")
  '(py-start-run-py-shell t)
- '(show-paren-mode t)
  '(smart-compile-alist (quote ((emacs-lisp-mode emacs-lisp-byte-compile) (html-mode browse-url-of-buffer) (nxhtml-mode browse-url-of-buffer) (html-helper-mode browse-url-of-buffer) (octave-mode run-octave) ("\\.c\\'" . "gcc -Wall -O2 %f -lm -o %n") ("\\.[Cc]+[Pp]*\\'" . "g++ -O2 %f -lm -o %n") ("\\.m\\'" . "gcc -O2 %f -lobjc -lpthread -o %n -std=c99") ("\\.java\\'" . "javac %f") ("\\.php\\'" . "php -l %f") ("\\.f90\\'" . "gfortran %f -o %n") ("\\.[Ff]\\'" . "gfortran %f -o %n") ("\\.cron\\(tab\\)?\\'" . "crontab %f") ("\\.tex\\'" tex-file) ("\\.texi\\'" . "makeinfo %f") ("\\.mp\\'" . "mptopdf %f") ("\\.pl\\'" . "perl -cw %f") ("\\.rb\\'" . "ruby -cw %f"))))
  '(speedbar-show-unknown-files t)
  '(tabbar-background-color "light gray")
@@ -399,11 +401,7 @@
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow14)
 
-(custom-set-faces
- '(mode-line ((t (:foreground "#030303" :background "#bdbdbd" :box nil))))
- '(mode-line-inactive ((t (:foreground "#f9f9f9" :background "#666666" :box nil)))))
-
-
-
+(require 'flymake-python-pyflakes)
+(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 
 

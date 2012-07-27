@@ -1,4 +1,4 @@
-terminal = 'urxvt' -- can be app in path, or full path e.g. /usr/bin/xterm
+terminal = 'gnome-terminal' -- can be app in path, or full path e.g. /usr/bin/xterm
 editor = "emacsclient -c"
 
 wallpaper_dir = os.getenv("HOME") .. "/Dropbox/Photos/wallpaper/awesome.png" -- grabs a random bg

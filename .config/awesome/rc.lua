@@ -642,3 +642,7 @@ mytimer:start()
 require_safe('autorun')
 
 awful.util.spawn_with_shell("synclient TapButton1=1")
+
+-- Brightness
+
+

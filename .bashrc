@@ -5,7 +5,7 @@ fi
 
 # Custom PS1
 
-PS1='`a=$?;if [ $a -ne 0 ]; then a=""$a; echo -ne "\[\e[s\e[1A\e[$((COLUMNS-2))G\e[31m\e[1;41m${a:(-3)}\e[u\]\[\e[0m\e[7m\e[2m\e"; fi`\[\e[0;32m\]\u@\h:\[\e[0m\e[1;34m\]\W\[\e[1;32m\]\$ \[\e[0m\]'
+PS1='`a=$?;if [ $a -ne 0 ]; then a=""$a; echo -ne "\[\e[s\e[1A\e[$((COLUMNS-2))G\e[31m\e[1;41m${a:(-3)}\e[u\]\[\e[0m\e[7m\e[2m\e"; fi`\[\e[0;32m\]\u@\h:\[\e[0m\e[0;34m\]\W\[\e[0;32m\]\$ \[\e[0m\]'
 
 # User specific aliases and functions
 alias cp='cp -i'
@@ -28,9 +28,8 @@ alias open="xdg-open"
 alias jt='xfce4-screenshooter'
 #editor
 export TERM=xterm-256color
-export UAEDITOR=emacs
-export EDITOR=emacs
-export VISUAL=emacs
+export EDITOR='emacsclient -c'
+
 
 # locale setting
 export LC_MESSAGES=en_US.UTF-8
@@ -77,5 +76,5 @@ curl -s \
 return 0;
 }
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin:$HOME/.local/bin/go/bin  # Add RVM to PATH for scripting
 

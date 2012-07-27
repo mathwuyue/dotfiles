@@ -39,7 +39,7 @@ URxvt.saveLines:3000
 URxvt.borderLess:      False
 !!字体设置
 Xft.dpi:96
-URxvt.font:xft:Bitstream Vera Sans Mono:size=12:style=Bold:antialias=true,xft:文泉驿等宽微米黑:size=12:style=Regular:antialias=true
-URxvt.boldfont:xft:Bitstream Vera Sans Mono:size=12:style=Bold:antialias=true,xft:文泉驿等微米黑:size=12:style=Bold:antialias=true
+URxvt.font:xft:Bitstream Vera Sans Mono:size=12:style=Bold:antialias=true,xft:WenQuanYi Zen Hei:size=12:style=Regular:antialias=true
+URxvt.boldfont:xft:Bitstream Vera Sans Mono:size=12:style=Bold:antialias=true
 !!multi-tab
 URxvt.perl-ext-common: default,matcher,tabbed
