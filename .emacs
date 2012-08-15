@@ -106,12 +106,13 @@
 ;; (require 'color-theme-solarized)
 ;; (color-theme-initialize)
 ;; (color-theme-solarized-dark)
-( add-to-list 'load-path "~/.emacs.d/site/emacs-color-theme-solarized/")
-(require 'color-theme-solarized)
-;;(color-theme-solarized-dark)
-(if window-system 
-   	(color-theme-solarized-dark)
-  ())
+
+;; ( add-to-list 'load-path "~/.emacs.d/site/emacs-color-theme-solarized/")
+;; (require 'color-theme-solarized)
+;; ;;(color-theme-solarized-dark)
+;; (if window-system 
+;;    	(color-theme-solarized-dark)
+;;   ())
 
 
 ;;===代码折叠=======
@@ -388,11 +389,11 @@
  '(py-shell-name "ipython")
  '(py-shell-toggle-1 "ipython")
  '(py-start-run-py-shell t)
- '(smart-compile-alist (quote ((emacs-lisp-mode emacs-lisp-byte-compile) (html-mode browse-url-of-buffer) (nxhtml-mode browse-url-of-buffer) (html-helper-mode browse-url-of-buffer) (octave-mode run-octave) ("\\.c\\'" . "gcc -Wall -O2 %f -lm -o %n") ("\\.[Cc]+[Pp]*\\'" . "g++ -O2 %f -lm -o %n") ("\\.m\\'" . "gcc -O2 %f -lobjc -lpthread -o %n -std=c99") ("\\.java\\'" . "javac %f") ("\\.php\\'" . "php -l %f") ("\\.f90\\'" . "gfortran %f -o %n") ("\\.[Ff]\\'" . "gfortran %f -o %n") ("\\.cron\\(tab\\)?\\'" . "crontab %f") ("\\.tex\\'" tex-file) ("\\.texi\\'" . "makeinfo %f") ("\\.mp\\'" . "mptopdf %f") ("\\.pl\\'" . "perl -cw %f") ("\\.rb\\'" . "ruby -cw %f"))))
+ '(smart-compile-alist (quote ((emacs-lisp-mode emacs-lisp-byte-compile) (html-mode browse-url-of-buffer) (nxhtml-mode browse-url-of-buffer) (html-helper-mode browse-url-of-buffer) (octave-mode run-octave) ("\\.c\\'" . "gcc -Wall %f -lm -o %n") ("\\.[Cc]+[Pp]*\\'" . "g++ -O2 %f -lm -o %n") ("\\.m\\'" . "gcc -O2 %f -lobjc -lpthread -o %n -std=c99") ("\\.java\\'" . "javac %f") ("\\.php\\'" . "php -l %f") ("\\.f90\\'" . "gfortran %f -o %n") ("\\.[Ff]\\'" . "gfortran %f -o %n") ("\\.cron\\(tab\\)?\\'" . "crontab %f") ("\\.tex\\'" tex-file) ("\\.texi\\'" . "makeinfo %f") ("\\.mp\\'" . "mptopdf %f") ("\\.pl\\'" . "perl -cw %f") ("\\.rb\\'" . "ruby -cw %f"))))
  '(speedbar-show-unknown-files t)
  '(tabbar-background-color "light gray")
- '(term-default-bg-color "#042028")
- '(term-default-fg-color "#eeeeee")
+ '(term-default-bg-color "")
+ '(term-default-fg-color "")
  '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
  '(tool-bar-mode nil)
  '(truncate-partial-width-windows nil))
@@ -405,3 +406,6 @@
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 
 
+(put 'erase-buffer 'disabled nil)
+
+(require 'auto-complete-yasnippet)

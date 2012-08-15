@@ -65,10 +65,10 @@ layouts = {
   awful.layout.suit.tile,
   awful.layout.suit.tile.bottom,
   awful.layout.suit.tile.top,
-  --awful.layout.suit.fair,
+  awful.layout.suit.fair,
   awful.layout.suit.max,
   awful.layout.suit.magnifier,
-  --awful.layout.suit.floating
+  awful.layout.suit.floating,
 }
 -- }}}
 
@@ -77,7 +77,7 @@ layouts = {
 -- Taglist numerals
 taglist_numbers_langs = { 'arabic', 'chinese', 'east_arabic', 'persian_arabic', }
 taglist_numbers_sets = {
-	arabic={ 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+	arabic={ "main", "www", "www", "term", "files", "vm", "dl", "music", "other" },
 	chinese={"一", "二", "三", "四", "五", "六", "七", "八", "九", "十"},
 	east_arabic={'١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'}, -- '٠' 0
 	persian_arabic={'٠', '١', '٢', '٣', '۴', '۵', '۶', '٧', '٨', '٩'},
@@ -429,6 +429,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+	
+-- volume control
+	awful.key({ modkey, }, "Up", function () awful.util.spawn("amixer -q sset Master 10%+ unmute") end),
+    awful.key({ modkey, }, "Down", function () awful.util.spawn("amixer -q sset Master 10%- unmute") end),
+    awful.key({}, "XF86AudioMute", function () awful.util.spawn("amixer -q sset Master toggle") end),
+    awful.key({}, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q sset Master 10%- unmute") end),
+    awful.key({}, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q sset Master 10%+ unmute") end),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -642,5 +649,3 @@ mytimer:start()
 require_safe('autorun')
 
 awful.util.spawn_with_shell("synclient TapButton1=1")
-
--- Brightness

@@ -25,6 +25,7 @@ alias todo="ec ~/Dropbox/org/plan/todo.org"
 alias ec='emacsclient -c'
 alias open="xdg-open"
 
+
 alias jt='xfce4-screenshooter'
 #editor
 export TERM=xterm-256color
