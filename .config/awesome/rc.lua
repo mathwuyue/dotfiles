@@ -437,6 +437,28 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q sset Master 10%- unmute") end),
     awful.key({}, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q sset Master 10%+ unmute") end),
 
+-- display light control
+	awful.key({ }, "XF86MonBrightnessDown", function ()
+				 awful.util.spawn("xbacklight -dec 15") end),
+    awful.key({ }, "XF86MonBrightnessUp", function ()
+				 awful.util.spawn("xbacklight -inc 15") end),
+-- screenshot
+	awful.key({ "Mod1" }, "Print",
+			  function ()
+				 awful.util.spawn("scrot -u -e 'mv $f ~/Pictures/Shot/'")
+				 os.execute("sleep 0.5")
+				 naughty.notify({ title="Screenshot", text="The focused window captured" })
+			  end),
+    awful.key({}, "Print",
+			  function ()
+				 awful.util.spawn("scrot -e 'mv $f ~/Pictures/Shot/'")
+				 os.execute("sleep 0.5")
+				 naughty.notify({ title="Screenshot", text="Full screen captured" })
+			  end),
+
+-- Gmrun
+	awful.key({ modkey, }, "r", function () awful.util.spawn("gmrun") end),
+
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -482,7 +504,7 @@ globalkeys = awful.util.table.join(
     end),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () promptbox[mouse.screen]:run() end),
+  --  awful.key({ modkey },            "r",     function () promptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -565,6 +587,7 @@ awful.rules.rules = {
       border_color = beautiful.border_normal }
     },
     { rule = { class = "ROX-Filer" },   properties = { floating = true } },
+	{ rule = { class = "Gmrun" },     properties = { floating = true } },
 }
 -- }}}
 

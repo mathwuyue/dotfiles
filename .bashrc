@@ -23,6 +23,7 @@ alias sshvps='ssh -p 2222 lowstz@lowstz.org'
 alias gowiki='cd ~/Dropbox/org/wiki'
 alias todo="ec ~/Dropbox/org/plan/todo.org"
 alias ec='emacsclient -c'
+alias ect='emacsclient -t'
 alias open="xdg-open"
 
 
