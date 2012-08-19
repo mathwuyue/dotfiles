@@ -273,8 +273,8 @@ vicious.register(volwidget, vicious.widgets.volume, " $1",  2, "Capture")
 -- Register buttons
 volbar.widget:buttons(awful.util.table.join(
    awful.button({ }, 1, function () exec("kmix") end),
-  awful.button({ }, 4, function () exec("amixer -q set Capture 2dB+", false) vicious.force({volbar, volwidget}) end),
-  awful.button({ }, 5, function () exec("amixer -q set Capture 2dB-", false) vicious.force({volbar, volwidget}) end)
+  awful.button({ }, 4, function () exec("amixer -q set Master 2dB+", false) vicious.force({volbar, volwidget}) end),
+  awful.button({ }, 5, function () exec("amixer -q set Master 2dB-", false) vicious.force({volbar, volwidget}) end)
 										   )) -- Register assigned buttons
 volwidget:buttons(volbar.widget:buttons())
 -- }}}
@@ -431,30 +431,34 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 	
 -- volume control
-	awful.key({ modkey, }, "Up", function () awful.util.spawn("amixer -q sset Master 10%+ unmute") end),
-    awful.key({ modkey, }, "Down", function () awful.util.spawn("amixer -q sset Master 10%- unmute") end),
-    awful.key({}, "XF86AudioMute", function () awful.util.spawn("amixer -q sset Master toggle") end),
-    awful.key({}, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q sset Master 10%- unmute") end),
-    awful.key({}, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q sset Master 10%+ unmute") end),
+	awful.key({ modkey, }, "Up", function () awful.util.spawn_with_shell("amixer -q sset Master 10%+ unmute") end),
+    awful.key({ modkey, }, "Down", function () awful.util.spawn_with_shell("amixer -q sset Master 10%- unmute") end),
+    awful.key({}, "XF86AudioMute", function () awful.util.spawn_with_shell("amixer -q sset Master toggle") end),
+    awful.key({}, "XF86AudioLowerVolume", function () awful.util.spawn_with_shell("amixer -q sset Master 10%- unmute") end),
+    awful.key({}, "XF86AudioRaiseVolume", function () awful.util.spawn_with_shell("amixer -q sset Master 10%+ unmute") end),
 
 -- display light control
 	awful.key({ }, "XF86MonBrightnessDown", function ()
-				 awful.util.spawn("xbacklight -dec 15") end),
+				 awful.util.spawn_with_shell("xbacklight -dec 15") end),
     awful.key({ }, "XF86MonBrightnessUp", function ()
-				 awful.util.spawn("xbacklight -inc 15") end),
+				 awful.util.spawn_with_shell("xbacklight -inc 15") end),
 -- screenshot
 	awful.key({ "Mod1" }, "Print",
 			  function ()
-				 awful.util.spawn("scrot -u -e 'mv $f ~/Pictures/Shot/'")
+				 awful.util.spawn_with_shell("scrot -u -e 'mv $f ~/Pictures/Shot/'")
 				 os.execute("sleep 0.5")
 				 naughty.notify({ title="Screenshot", text="The focused window captured" })
 			  end),
     awful.key({}, "Print",
 			  function ()
-				 awful.util.spawn("scrot -e 'mv $f ~/Pictures/Shot/'")
+				 awful.util.spawn_with_shell("scrot -e 'mv $f ~/Pictures/Shot/'")
 				 os.execute("sleep 0.5")
 				 naughty.notify({ title="Screenshot", text="Full screen captured" })
 			  end),
+
+-- enable and disable touchpad
+	awful.key({}, "XF86TouchpadToggle", function ()
+				 awful.util.spawn_with_shell("synclient TouchpadOff=$(synclient -l | grep -c 'TouchpadOff.*=.*0')") end),
 
 -- Gmrun
 	awful.key({ modkey, }, "r", function () awful.util.spawn("gmrun") end),
